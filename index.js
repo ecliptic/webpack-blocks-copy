@@ -17,7 +17,7 @@ export function copy (from, to) {
   return Object.assign(context => {
     // Merge the provided simple pattern into the config
     const config = {patterns: [{from, to}]}
-    context.copyPlugin = merge(context.copyPlugin, config, {clone: true})  // eslint-disable-line fp/no-mutation
+    context.copyPlugin = merge(context.copyPlugin || {}, config, {clone: true})  // eslint-disable-line fp/no-mutation
 
     return {}
   }, {post: postConfig})
@@ -32,7 +32,7 @@ export function copyPattern (pattern) {
   return Object.assign(context => {
     // Merge the provided advanced pattern into the config
     const config = {patterns: [pattern]}
-    context.copyPlugin = merge(context.copyPlugin, config, {clone: true})  // eslint-disable-line fp/no-mutation
+    context.copyPlugin = merge(context.copyPlugin || {}, config, {clone: true})  // eslint-disable-line fp/no-mutation
 
     return {}
   }, {post: postConfig})
@@ -46,7 +46,7 @@ export function copyPattern (pattern) {
 export function copyOptions (options) {
   return Object.assign(context => {
     // Merge the provided copy plugin config into the context
-    context.copyPlugin = merge(context.copyPlugin, {options}, {clone: true})  // eslint-disable-line fp/no-mutation
+    context.copyPlugin = merge(context.copyPlugin || {}, {options}, {clone: true})  // eslint-disable-line fp/no-mutation
 
     return {}
   }, {post: postConfig})
