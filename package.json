@@ -1,6 +1,6 @@
 {
   "name": "webpack-blocks-copy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A webpack-block for copy-webpack-plugin",
   "main": "lib/index.js",
   "scripts": {
