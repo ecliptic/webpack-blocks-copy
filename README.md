@@ -5,16 +5,21 @@ A [webpack-block](https://github.com/andywer/webpack-blocks) for [copy-webpack-p
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 [![NPM Version](https://img.shields.io/npm/v/webpack-blocks-copy.svg)](https://www.npmjs.com/package/webpack-blocks-copy)
 
+*Version compatibility:*
+
+* webpack-blocks v0._x_ -> webpack-blocks-copy [v1._x_](https://github.com/ecliptic/webpack-blocks-copy/tree/master) (@latest)
+* webpack-blocks v1._x_ -> webpack-blocks-copy [v2._x_](https://github.com/ecliptic/webpack-blocks-copy) (@next)
+
 ## Installation
 
 ```sh
-yarn add --dev webpack-blocks-copy
+$ yarn add --dev webpack-blocks-copy
 ```
 
 or
 
 ```sh
-npm install --save-dev webpack-blocks-copy
+$ npm install --save-dev webpack-blocks-copy
 ```
 
 ## Usage
@@ -35,7 +40,7 @@ export default createConfig([
 ])
 ```
 
-This would result in the following CopyPlugin config:
+This would result in the following copy plugin config:
 
 ```js
 new CopyWebpackPlugin([
