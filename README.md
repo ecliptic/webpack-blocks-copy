@@ -2,6 +2,7 @@
 
 A [webpack-block](https://github.com/andywer/webpack-blocks) for [copy-webpack-plugin](https://github.com/kevlened/copy-webpack-plugin).
 
+[![CircleCI](https://circleci.com/gh/ecliptic/webpack-blocks-copy.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/ecliptic/webpack-blocks-copy)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 [![NPM Version](https://img.shields.io/npm/v/webpack-blocks-copy.svg)](https://www.npmjs.com/package/webpack-blocks-copy)
 
