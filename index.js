@@ -5,7 +5,15 @@
  * @see https://github.com/kevlened/copy-webpack-plugin
  */
 import CopyWebpackPlugin from 'copy-webpack-plugin'
-import merge from 'deepmerge'
+
+type Config = Object;
+
+type Helpers = { merge: Config => Config };
+
+type Block = {
+  (context: Object, helpers: Helpers): Config => Config,
+  post: (context: Object, helpers: Helpers) => Config => Config
+};
 
 export type Pattern = {
   from: string | Object,
@@ -27,64 +35,72 @@ export type Options = {
 /**
  * Adds a simple copy pattern to the list of patterns for the plugin.
  */
-export function copy (from: string, to: string) {
-  return (context: Object) => (config: Object) => {
-    // Merge the provided simple pattern into the config
-    const options = {patterns: [{from, to}]}
-    context.copyPlugin = merge(context.copyPlugin || {}, options, {
-      clone: true,
-    })
+function copy (from: string, to?: string): Block {
+  return Object.assign(
+    context => prevConfig => {
+      context.copyPlugin = context.copyPlugin || {patterns: []}
 
-    // Don't alter the config yet
-    return config
-  }
+      // Merge the provided simple pattern into the config
+      context.copyPlugin = {
+        ...context.copyPlugin,
+        patterns: [...context.copyPlugin.patterns, {from, to}],
+      }
+
+      // Don't alter the config yet
+      return prevConfig
+    },
+    {post: postConfig}
+  )
 }
-
-copy.post = postConfig
 
 /**
  * Adds an advanced pattern to the list of patterns for the plugin.
  */
-export function copyPattern (pattern: Pattern) {
-  return (context: Object) => (config: Object) => {
-    const options = {patterns: [pattern]}
-    context.copyPlugin = merge(context.copyPlugin || {}, options, {
-      clone: true,
-    })
+function copyPattern (pattern: Pattern): Block {
+  return Object.assign(
+    context => prevConfig => {
+      context.copyPlugin = context.copyPlugin || {patterns: []}
 
-    // Don't alter the config yet
-    return config
-  }
+      // Merge the provided advanced pattern into the config
+      context.copyPlugin = {
+        ...context.copyPlugin,
+        patterns: [...context.copyPlugin.patterns, pattern],
+      }
+
+      // Don't alter the config yet
+      return prevConfig
+    },
+    {post: postConfig}
+  )
 }
-
-copyPattern.post = postConfig
 
 /**
  * Sets options for the copy plugin.
  */
-export function copyOptions (options: Options) {
-  return (context: Object) => (config: Object) => {
-    // Merge the provided copy plugin config into the context
-    context.copyPlugin = merge(
-      context.copyPlugin || {},
-      {options},
-      {clone: true}
-    )
+function copyOptions (options: Options): Block {
+  return Object.assign(
+    context => prevConfig => {
+      context.copyPlugin = context.copyPlugin || {}
 
-    // Don't alter the config yet
-    return config
-  }
+      // Merge the provided copy plugin config into the context
+      context.copyPlugin = {...context.copyPlugin, options}
+
+      // Don't alter the config yet
+      return prevConfig
+    },
+    {post: postConfig}
+  )
 }
-
-copyOptions.post = postConfig
 
 /**
  * Instantiate the copy plugin.
  */
-function postConfig (context: Object) {
-  const {patterns, options} = context.copyPlugin
-
-  const plugin = new CopyWebpackPlugin(patterns, options)
-
-  return {plugins: [plugin]}
+function postConfig (context: Object, {merge}: Helpers): Config => Config {
+  return prevConfig => {
+    const {patterns, options} = context.copyPlugin
+    const plugin = new CopyWebpackPlugin(patterns, options)
+    return merge({plugins: [plugin]})
+  }
 }
+
+export {copy, copyPattern, copyOptions}
