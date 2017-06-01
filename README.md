@@ -9,7 +9,7 @@ A [webpack-block](https://github.com/andywer/webpack-blocks) for [copy-webpack-p
 *Version compatibility:*
 
 * webpack-blocks v0._x_ -> webpack-blocks-copy [v1._x_](https://github.com/ecliptic/webpack-blocks-copy/tree/master) (@latest)
-* webpack-blocks v1._x_ -> webpack-blocks-copy [v2._x_](https://github.com/ecliptic/webpack-blocks-copy) (@next)
+* webpack-blocks v1._x_ -> DEPRECATED: Merged into [webpack-blocks-utils](https://github.com/ecliptic/webpack-blocks-utils)
 
 ## Installation
 
